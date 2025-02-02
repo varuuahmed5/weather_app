@@ -8,10 +8,19 @@ class CachedWeatherData {
   final WeatherModel currentWeather;
   final List<WeatherModel> forecast;
 
-  CachedWeatherData({
-    required this.currentWeather,
-    required this.forecast,
-  });
+  
+  CachedWeatherData weatherData = CachedWeatherData(
+    currentWeather: "Sunny",
+    forecast: "Rain in the evening",
+    timestamp: DateTime.now(),
+  );
+
+  print(weatherData.toString());
+
+  bool isFresh = weatherData.isDataFresh(Duration(minutes: 10));
+  print(isFresh ? "Data is fresh" : "Data is outdated");
+
+
 }
 
 // Fasalka WeatherService
