@@ -3,7 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import '../controllers/weather_controller.dart'; // Import the controller
-import '../models/weather_model.dart';
+import 'package:new_project/models/weather_model.dart';
 
 class WeatherScreen extends StatelessWidget {
   const WeatherScreen({Key? key}) : super(key: key);
@@ -179,19 +179,14 @@ class WeatherMapScreen extends StatelessWidget {
 
     return Obx(() {
       var weather = weatherController.currentWeather?.value;
-      if (weather == null) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      }
 
-      double latitude = weather.latitude ?? 0.0;
-      double longitude = weather.longitude ?? 0.0;
+      double latitude = weather?.latitude ?? 37.7749; // Default to San Francisco's lat
+      double longitude = weather?.longitude ?? -122.4194; // Default to San Francisco's long
 
       return FlutterMap(
         options: MapOptions(
-          center: LatLng(latitude, longitude), // Correct center parameter
-          zoom: 12.0, // Correct zoom parameter
+          center: LatLng(latitude, longitude), // Center map based on weather location
+          zoom: 12.0, // Proper zoom level
         ),
         children: [
           TileLayer(
@@ -201,7 +196,7 @@ class WeatherMapScreen extends StatelessWidget {
           MarkerLayer(
             markers: [
               Marker(
-                point: LatLng(latitude, longitude), // Correct point parameter
+                point: LatLng(latitude, longitude), // Marker for the current location
                 width: 80.0,
                 height: 80.0,
                 builder: (ctx) => const Icon(
@@ -217,7 +212,6 @@ class WeatherMapScreen extends StatelessWidget {
     });
   }
 }
-
 
 class WeatherDetailsScreen extends StatelessWidget {
   const WeatherDetailsScreen({Key? key}) : super(key: key);
@@ -346,6 +340,34 @@ class SearchLocationScreen extends StatelessWidget {
               children: const [
                 Text(
                   '21°',
+                  style: TextStyle(fontSize: 20),
+                ),
+                Icon(Icons.cloud),
+              ],
+            ),
+          ),
+          ListTile(
+            title: const Text('Location'),
+            subtitle: const Text('Ethiopia'),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Text(
+                  '30°',
+                  style: TextStyle(fontSize: 20),
+                ),
+                Icon(Icons.cloud),
+              ],
+            ),
+          ),
+          ListTile(
+            title: const Text('Location'),
+            subtitle: const Text('Kenya'),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Text(
+                  '29°',
                   style: TextStyle(fontSize: 20),
                 ),
                 Icon(Icons.cloud),
