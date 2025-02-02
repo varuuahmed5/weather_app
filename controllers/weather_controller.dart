@@ -35,7 +35,7 @@ class WeatherController extends GetxController {
       // Fetch the current location
       final position = await _weatherService.getCurrentLocation();
 
-      // Fetch current weather
+      // Fetch the current weather based on the user's location
       final weather = await _weatherService.getWeather(
         position.latitude,
         position.longitude,
@@ -44,12 +44,15 @@ class WeatherController extends GetxController {
       // Update current weather observable
       _currentWeather.value = weather;
 
-      // Fetch the forecast
-      final forecastData = await _weatherService.getForecast(
-        position.latitude,
-        position.longitude,
-      );
+     // Fetch the weather forecast based on the user's location
+    final forecastData = await _weatherService.getForecast(
+      position.latitude,
+      position.longitude,
+    );
+  
+      // Update the forecast list with the fetched data
       _forecast.assignAll(forecastData);
+
 
       // Save to local storage for offline access
       await _weatherService.saveWeatherData(weather, forecastData);
